@@ -1,6 +1,6 @@
 # BÁO CÁO DỰ ÁN: KHẢO SÁT NGƯỜI DÙNG VÀ XÂY DỰNG SẢN PHẨM WEB QUẢN LÝ QUÁN ĂN (FOODSYNC)
 
-Từ nhu cầu người dùng đến User Story, Acceptance Criteria và Product Backlog · CMC University · 2026
+Từ nhu cầu người dùng đến User Story, Acceptance Criteria, Product Backlog và Kế hoạch kiểm thử · CMC University · 2026
 
 ## Mục lục
 
@@ -14,6 +14,7 @@ Từ nhu cầu người dùng đến User Story, Acceptance Criteria và Product
 - [Bước 7 – Tiêu chí chấp nhận và quy tắc nghiệp vụ](#bước-7--tiêu-chí-chấp-nhận-và-quy-tắc-nghiệp-vụ)
 - [Bước 8 – Từ User Story đến tính năng](#bước-8--từ-câu-chuyện-người-dùng-đến-tính-năng)
 - [Bước 9 – Product Backlog và kế hoạch Sprint](#bước-9--product-backlog-và-kế-hoạch-sprint)
+- [Bước 10 – Kế hoạch kiểm thử](#bước-10--kế-hoạch-kiểm-thử)
 - [Kết luận](#kết-luận)
 
 ## Thông tin chung
@@ -194,6 +195,233 @@ Chưa đưa vào Backlog: quản lý nguyên liệu, kho, công thức mở rộ
 | Nguồn đơn, trạng thái chế biến | Chưa có | Sprint 3 và Sprint 4 |
 | Thống kê theo nguồn, chấm công | Chưa có | Sprint 5 |
 | Tích hợp tự động Zalo, Grab, ShopeeFood | Chưa có, ngoài phạm vi MVP | Xem lại sau khi xác minh khả năng kết nối |
+
+## BƯỚC 10 – KẾ HOẠCH KIỂM THỬ
+
+**Mục tiêu:** chứng minh mỗi User Story (US01–US09) đạt đúng Tiêu chí chấp nhận (Bước 7) và Quy tắc nghiệp vụ, trước khi bàn giao ở Sprint 5. Mỗi test case đều truy vết được về một User Story.
+
+### 10.1. Phạm vi kiểm thử
+
+| Nội dung | Mô tả |
+|---|---|
+| Trong phạm vi | US01–US09, các quy tắc nghiệp vụ ở Bước 7, kiểm thử hồi quy các luồng đã có (đăng nhập, thực đơn, hóa đơn, thanh toán, QR, đặt bàn) |
+| Ngoài phạm vi | Tích hợp tự động Zalo, Grab, ShopeeFood; nguyên liệu/kho nâng cao; cô lập dữ liệu nhiều quán; kiểm thử tải lớn |
+| Loại kiểm thử | Chức năng (hộp đen), kiểm thử giá trị biên, kiểm thử phân quyền, kiểm thử hồi quy |
+| Môi trường | ASP.NET Core MVC, Entity Framework Core, SQL Server; trình duyệt Chrome (bản mới nhất); dữ liệu mẫu riêng, không dùng dữ liệu thật |
+| Tài khoản mẫu | 1 Quản lý, 1 Nhân viên, 1 Khách hàng; thực đơn mẫu ≥ 5 món; ≥ 3 bàn |
+| Người thực hiện | Các thành viên Nhóm 1; mỗi Sprint do thành viên không viết chức năng đó kiểm thử chéo |
+
+### 10.2. Tiêu chí bắt đầu, kết thúc và mức độ lỗi
+
+| Hạng mục | Quy định |
+|---|---|
+| Bắt đầu kiểm thử | Chức năng đã hoàn thành trong Sprint, chạy được trên môi trường kiểm thử, có dữ liệu mẫu |
+| Kết thúc Sprint | 100% test case mức Cao ở trạng thái Pass; không còn lỗi Nghiêm trọng/Cao chưa sửa |
+| Chấp nhận bàn giao | Tối thiểu 95% test case Pass; mọi lỗi tồn đọng có ghi chú và người phụ trách |
+| Nghiêm trọng | Mất dữ liệu, sai tiền, vượt quyền truy cập, hệ thống không dùng được |
+| Cao | Chức năng chính sai kết quả nhưng có cách khắc phục tạm |
+| Trung bình | Sai thông báo, sai bộ lọc, lỗi hiển thị không ảnh hưởng dữ liệu |
+| Thấp | Lỗi giao diện nhỏ, chính tả |
+
+**Quy ước cột trong bảng test case**
+- **Kết quả thực tế:** ghi lại những gì hệ thống làm. Các kết quả hiện có được lấy bằng **kiểm thử tĩnh**: đối chiếu từng test case với mã nguồn website (`test.zip`: controller, model, view). Chưa chạy trên trình duyệt và SQL Server, nên cần chạy lại các test case trước khi bàn giao.
+- **Người kiểm thử:** thành viên chịu trách nhiệm chạy test case và ghi kết quả (xem phân công ở 10.3).
+- **Trạng thái:** chỉ có hai giá trị: **Pass** (kết quả thực tế khớp kết quả mong đợi) hoặc **Chưa pass** (chưa chạy, hoặc chạy nhưng kết quả khác mong đợi). Mặc định là *Chưa pass*; chỉ đổi sang *Pass* sau khi đã điền kết quả thực tế. Nếu chạy mà sai, giữ *Chưa pass* và ghi mã lỗi ở mục 10.6.
+
+### 10.3. Danh sách kịch bản kiểm thử (Test Scenario)
+
+| Mã KB | Kịch bản | User Story | Sprint | Số TC |
+|---|---|---|---|---|
+| KB01 | Đăng ký, đăng nhập và phân quyền | US01 | 1 | 7 |
+| KB02 | Quản lý thực đơn và giá món | US02 | 2 | 6 |
+| KB03 | Lập đơn tại quầy (POS) | US03 | 3 | 6 |
+| KB04 | Thanh toán và đóng/hủy hóa đơn | US03 | 3 | 10 |
+| KB05 | Danh sách thẻ đơn và bộ lọc | US04 | 4 | 6 |
+| KB06 | Trạng thái chế biến | US05 | 4 | 4 |
+| KB07 | Thống kê đơn và doanh thu theo nguồn | US06 | 5 | 4 |
+| KB08 | Chấm công Check-in/Check-out | US07 | 5 | 4 |
+| KB09 | Khách quét QR gọi món | US08 | 3–5 | 3 |
+| KB10 | Khách đặt bàn trước | US09 | 4–5 | 7 |
+| | **Tổng** | | | **57** |
+
+### 10.3b. Phân công người kiểm thử
+
+Nguyên tắc: người kiểm thử **không phải người viết chức năng đó** (kiểm thử chéo) để tránh bỏ sót lỗi do quen tay. Bảng dưới là phân công mặc định chia đều 19 test case cho mỗi người; nếu thành viên nào viết chức năng được giao, hoán đổi với người khác trong nhóm.
+
+| Người kiểm thử | Kịch bản phụ trách | Số TC | Tỷ lệ |
+|---|---|---|---|
+| Phạm Tiến Sơn | KB02 (Thực đơn), KB04 (Thanh toán), KB09 (QR gọi món) | 19 | 33,3% |
+| Nguyễn Nhật Tân | KB01 (Tài khoản, phân quyền), KB03 (Lập đơn POS), KB05 (Thẻ đơn, bộ lọc) | 19 | 33,3% |
+| Đỗ Anh Tài | KB06 (Chế biến), KB07 (Thống kê), KB08 (Chấm công), KB10 (Đặt bàn trước) | 19 | 33,3% |
+| **Tổng** | | **57** | 100% |
+
+### 10.4. Chi tiết test case
+
+*Mức ưu tiên: C = Cao, TB = Trung bình, T = Thấp.*
+
+#### KB01 – Đăng ký, đăng nhập và phân quyền (US01)
+**Tiền điều kiện chung:** đã có tài khoản Quản lý, Nhân viên, Khách hàng trong cơ sở dữ liệu.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC01-01 | Đăng nhập đúng tài khoản Quản lý | 1. Mở trang đăng nhập<br>2. Nhập email, mật khẩu đúng<br>3. Bấm Đăng nhập | Vào được trang quản lý; hiển thị đúng tên và vai trò | Đăng nhập nhân viên/quản lý bằng tài khoản + mật khẩu đúng thì vào trang Quản trị (AccountController.Login); vai trò lấy từ chức vụ. | C | Tân | Pass |
+| TC01-02 | Đăng nhập sai mật khẩu | 1. Nhập email đúng, mật khẩu sai<br>2. Bấm Đăng nhập | Báo lỗi đăng nhập; ở lại trang đăng nhập; không tiết lộ email hay mật khẩu sai | Báo “Sai tài khoản hoặc mật khẩu”, ở lại trang đăng nhập; dùng chung 1 thông báo nên không lộ tài khoản nào tồn tại. | C | Tân | Pass |
+| TC01-03 | Chưa đăng nhập mà mở trang quản lý | 1. Mở trình duyệt mới (chưa đăng nhập)<br>2. Nhập thẳng địa chỉ trang quản lý | Được chuyển đến trang đăng nhập | Chưa đăng nhập vào trang quản lý được chuyển tới /Account/Login kèm returnUrl (Program.cs, OnRedirectToLogin). | C | Tân | Pass |
+| TC01-04 | Nhân viên mở trang chỉ dành cho Quản lý | 1. Đăng nhập bằng tài khoản Nhân viên<br>2. Nhập địa chỉ trang Quản lý | Hệ thống từ chối truy cập (trang “Không có quyền” hoặc 403) | Trang Quản lý thực đơn có [Authorize(Roles = QuanLy)]; Nhân viên bị chuyển tới /Account/AccessDenied. | C | Tân | Pass |
+| TC01-05 | Khách hàng mở trang của Nhân viên | 1. Đăng nhập bằng tài khoản Khách hàng<br>2. Nhập địa chỉ màn hình lập đơn | Hệ thống từ chối truy cập | Trang hóa đơn chỉ cho Quản lý/Nhân viên; Khách hàng bị chuyển tới /Account/AccessDenied. | C | Tân | Pass |
+| TC01-06 | Đăng ký tài khoản hợp lệ | 1. Mở trang đăng ký<br>2. Nhập email chưa dùng, mật khẩu hợp lệ, thông tin quán<br>3. Bấm Đăng ký | Tạo tài khoản thành công; đăng nhập được bằng tài khoản vừa tạo | Khách hàng đăng ký bằng họ tên + SĐT + mật khẩu và tự đăng nhập. Chưa có đăng ký chủ quán bằng email và chưa có bước khai báo thông tin quán như US01 (xem BUG-01). | C | Tân | Chưa pass |
+| TC01-07 | Đăng ký bằng email đã tồn tại | 1. Nhập email đã có tài khoản<br>2. Bấm Đăng ký | Báo lỗi email đã được dùng; không tạo tài khoản trùng | Hệ thống chỉ chặn trùng SĐT (“Số điện thoại này đã được đăng ký”); email không bị kiểm tra trùng (xem BUG-01). | C | Tân | Chưa pass |
+
+#### KB02 – Quản lý thực đơn và giá món (US02)
+**Tiền điều kiện:** đăng nhập bằng tài khoản Quản lý.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC02-01 | Thêm món hợp lệ: “Cơm gà”, 45.000 | 1. Mở Quản lý thực đơn<br>2. Bấm Thêm món<br>3. Nhập tên, giá, danh mục<br>4. Lưu | Món xuất hiện trong danh sách thực đơn với đúng tên và giá | Thêm món hợp lệ thì lưu và quay về danh sách thực đơn (QuanLyThucDon.Create). | C | Sơn | Pass |
+| TC02-02 | Thêm món với tên trống | 1. Bỏ trống tên món, nhập giá 30.000<br>2. Lưu | Báo lỗi “tên món bắt buộc”; không lưu món | Tên món là trường bắt buộc nên không lưu, hiện lỗi ngay dưới ô Tên món. | C | Sơn | Pass |
+| TC02-03 | Thêm món với giá âm: -5.000 | 1. Nhập tên món, giá -5.000<br>2. Lưu | Báo lỗi giá không hợp lệ; không lưu món | Báo “Giá món phải lớn hơn 0.”; không lưu. | C | Sơn | Pass |
+| TC02-04 | Thêm món với giá không phải số: “abc” | 1. Nhập giá “abc”<br>2. Lưu | Báo lỗi giá không hợp lệ; không lưu món | Ô giá nhập chữ bị lỗi định dạng ở bước đọc dữ liệu; không lưu. | TB | Sơn | Pass |
+| TC02-05 | Đổi giá món, hóa đơn cũ giữ giá | 1. Lập và lưu hóa đơn có món A giá 45.000<br>2. Đổi giá món A thành 50.000<br>3. Mở lại hóa đơn cũ | Hóa đơn cũ vẫn hiển thị 45.000; hóa đơn mới dùng 50.000 | Đơn giá được lưu riêng trong chi tiết hóa đơn (DonGia) lúc gọi, nên đổi giá món không làm đổi hóa đơn cũ. | C | Sơn | Pass |
+| TC02-06 | Xóa món | 1. Chọn món chưa dùng trong hóa đơn<br>2. Bấm Xóa, xác nhận | Món biến mất khỏi thực đơn; không còn chọn được khi lập đơn | Món chưa nằm trong hóa đơn được xóa và biến mất khỏi thực đơn; món đã có trong hóa đơn bị chặn kèm thông báo. | TB | Sơn | Pass |
+
+#### KB03 – Lập đơn tại quầy (US03)
+**Tiền điều kiện:** đăng nhập bằng Nhân viên; thực đơn có ≥ 3 món (A = 45.000, B = 30.000, C = 20.000); có ≥ 1 bàn.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC03-01 | Lập đơn nhiều món, nguồn “Tại quầy”: A×2, B×1 | 1. Mở màn hình lập đơn<br>2. Chọn bàn<br>3. Thêm A (SL 2), B (SL 1)<br>4. Chọn nguồn “Tại quầy”<br>5. Lưu | Đơn lưu đủ 2 món, đúng nguồn; tổng tiền = 2×45.000 + 30.000 = 120.000 | Thêm A×2, B×1 cho tổng đúng 120.000, nhưng không có ô chọn nguồn đơn “Tại quầy” và phải thêm từng món ở trang chi tiết, không phải một màn hình (xem BUG-02, BUG-03). | C | Tân | Chưa pass |
+| TC03-02 | Lưu khi chưa chọn món | 1. Mở màn hình lập đơn<br>2. Không thêm món<br>3. Bấm Lưu | Báo lỗi chưa chọn món; không tạo đơn | Chọn bàn là tạo ngay hóa đơn rỗng (tổng 0); không có nút Lưu để chặn. Chỉ chặn ở bước thanh toán “Hóa đơn chưa có món” (xem BUG-03). | C | Tân | Chưa pass |
+| TC03-03 | Số lượng nhỏ nhất và lớn nhất: 1 và 99 | 1. Thêm món A SL 1, lưu<br>2. Thêm món A SL 99, lưu | Cả hai đơn lưu được; tổng tiền lần lượt 45.000 và 4.455.000 | ThemMon nhận số lượng 1–99; A×99 cho tổng 4.455.000. | C | Tân | Pass |
+| TC03-04 | Số lượng ngoài khoảng: 0, 100, -1 | 1. Nhập SL 100 rồi lưu<br>2. Nhập SL -1 rồi lưu | Báo lỗi số lượng phải từ 1 đến 99; không lưu | Số lượng 0, 100, -1 đều báo “Số lượng phải từ 1 đến 99.”; không lưu. | C | Tân | Pass |
+| TC03-05 | Sửa số lượng về 0 thì xóa món | 1. Thêm A, B vào đơn<br>2. Sửa SL của B về 0 | Món B bị xóa khỏi đơn; tổng tiền tính lại chỉ còn món A | DoiSoLuong với 0 thì xóa dòng món và tính lại tổng tiền. | TB | Tân | Pass |
+| TC03-06 | Tổng tiền do máy chủ tính | 1. Thêm món A SL 2<br>2. Dùng công cụ nhà phát triển (F12) sửa tổng tiền hiển thị thành 1.000<br>3. Lưu | Đơn lưu với tổng 90.000 (tính lại từ giá chốt), không lấy 1.000 | Tổng tiền luôn do máy chủ tính từ đơn giá trong cơ sở dữ liệu; không nhận tổng tiền từ trình duyệt. | C | Tân | Pass |
+
+#### KB04 – Thanh toán và đóng/hủy hóa đơn (US03)
+**Tiền điều kiện:** có hóa đơn H1 tổng 120.000, chưa thanh toán; đăng nhập bằng Nhân viên/Thu ngân.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC04-01 | Trả đủ bằng tiền mặt | 1. Mở H1<br>2. Chọn Tiền mặt, nhập 120.000<br>3. Xác nhận | H1 chuyển “Đã thanh toán”; kho được trừ theo công thức món; tính vào doanh thu | Trả đủ thì hóa đơn thành “Đã thanh toán”, trừ tồn kho theo công thức và tính vào doanh thu (cùng một lần lưu). | C | Sơn | Pass |
+| TC04-02 | Trả một phần: 50.000 | 1. Chọn Tiền mặt, nhập 50.000 | H1 vẫn chưa đóng; còn lại 70.000; ghi nhận khoản 50.000 | Ghi nhận 50.000, hiện “Còn lại 70.000”; hóa đơn vẫn mở. | C | Sơn | Pass |
+| TC04-03 | Số tiền ngoài khoảng cho phép: 0, vượt số còn lại, 1.500,5 | 1. Nhập 0, thử trả<br>2. Nhập 200.000 khi còn 120.000<br>3. Nhập 1.500,5 | Cả ba lần báo lỗi (phải là số nguyên đồng từ 1 đến số còn lại); không ghi nhận | Số tiền ≤ 0, lớn hơn số còn lại hoặc có phần lẻ đều bị từ chối kèm số tiền còn lại. | C | Sơn | Pass |
+| TC04-04 | Chuyển khoản chờ xác nhận | 1. Chọn Chuyển khoản QR, nhập 120.000<br>2. Gửi | Khoản ở trạng thái “Chờ xác nhận”; H1 chưa chuyển “Đã thanh toán” | Khách bấm “Tôi đã chuyển khoản” thì tạo khoản “Chờ xác nhận” bằng đúng số còn lại, hóa đơn chưa đóng. Lưu ý: nhân viên tự nhập chuyển khoản thì được ghi nhận ngay, nên bước kiểm thử cần theo luồng của khách. | C | Sơn | Pass |
+| TC04-05 | Xác nhận chuyển khoản | 1. Mở khoản đang chờ<br>2. Bấm Xác nhận | Khoản được tính; đủ tiền thì H1 chuyển “Đã thanh toán” | Xác nhận thì khoản thành công; đủ tiền thì hóa đơn chuyển “Đã thanh toán”. | C | Sơn | Pass |
+| TC04-06 | Từ chối chuyển khoản | 1. Mở khoản đang chờ<br>2. Bấm Từ chối | Khoản không được tính; H1 giữ nguyên số còn lại | Từ chối thì khoản chuyển thành thất bại, không tính vào số đã trả. | C | Sơn | Pass |
+| TC04-07 | Hóa đơn đã thanh toán không sửa được | 1. Mở hóa đơn “Đã thanh toán”<br>2. Thử thêm món hoặc thanh toán thêm | Hệ thống chặn và báo lỗi; hóa đơn không đổi | Mọi thao tác sửa/thanh toán đều chặn khi hóa đơn không còn ở trạng thái chưa thanh toán (“đã đóng, không thể thay đổi”). | C | Sơn | Pass |
+| TC04-08 | Sửa món làm tổng thấp hơn số đã trả | 1. H1 đã trả 100.000<br>2. Xóa món để tổng còn 60.000<br>3. Lưu | Báo lỗi; không lưu thay đổi | Báo “Khách đã trả … nên tổng tiền không thể thấp hơn”; không lưu. | C | Sơn | Pass |
+| TC04-09 | Hủy hóa đơn chưa thu đồng nào / đã thu | 1. Hủy hóa đơn chưa thu<br>2. Thử hủy hóa đơn đã thu 50.000 | (1) Hủy được, không vào doanh thu. (2) Báo lỗi, không hủy được | Hóa đơn chưa thu thì hủy được; hóa đơn đã có thanh toán bị chặn (“không hủy được”). | C | Sơn | Pass |
+| TC04-10 | Hai thu ngân cùng thanh toán một hóa đơn | 1. Hai người dùng cùng mở H1<br>2. Cả hai nhập 120.000 và xác nhận gần như cùng lúc | Chỉ một giao dịch được ghi nhận; người còn lại nhận thông báo; tổng đã thu không vượt 120.000 | Các thao tác thanh toán chạy lần lượt qua khóa SemaphoreSlim; người thứ hai gặp hóa đơn đã đóng và bị chặn. Chỉ đúng khi web chạy một tiến trình. | C | Sơn | Pass |
+
+#### KB05 – Danh sách thẻ đơn và bộ lọc (US04)
+**Tiền điều kiện:** có đơn nguồn “QR tại bàn”, “Đặt bàn trước” và “Tại quầy” ở các ngày và trạng thái thanh toán khác nhau; có 1 đơn cũ chưa có nguồn.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC05-01 | Hiển thị nguồn trên thẻ đơn | 1. Mở danh sách đơn | Mỗi thẻ hiển thị đúng nguồn của đơn đó | Danh sách hóa đơn là bảng (số bàn, khách, ngày, tổng, đã trả, trạng thái); không có thẻ đơn và không có cột nguồn (xem BUG-02). | C | Tân | Chưa pass |
+| TC05-02 | Lọc theo nguồn “QR tại bàn” | 1. Chọn bộ lọc nguồn = QR tại bàn | Chỉ hiển thị đơn có nguồn QR tại bàn | Không có bộ lọc theo nguồn; chỉ lọc theo ngày và trạng thái (xem BUG-02). | C | Tân | Chưa pass |
+| TC05-03 | Lọc theo ngày | 1. Chọn ngày D | Chỉ hiển thị đơn của ngày D | Lọc theo ngày trả đúng các hóa đơn lập trong ngày đó. | TB | Tân | Pass |
+| TC05-04 | Lọc theo trạng thái thanh toán “Đã thanh toán” | 1. Chọn trạng thái | Chỉ hiển thị đơn đã thanh toán | Lọc theo trạng thái thanh toán hoạt động; mặc định hiện “Chưa thanh toán”. | TB | Tân | Pass |
+| TC05-05 | Danh sách rỗng | 1. Lọc theo điều kiện không có đơn nào | Hiện trạng thái rỗng (“Chưa có đơn”), không báo lỗi hệ thống | Hiện “Không có hóa đơn nào phù hợp.”, không báo lỗi. | TB | Tân | Pass |
+| TC05-06 | Đơn cũ chưa có nguồn | 1. Mở danh sách có đơn cũ | Đơn cũ vẫn hiển thị với nguồn mặc định (không lỗi, không trống) | Chưa có khái niệm nguồn đơn nên không có giá trị mặc định cho đơn cũ (xem BUG-02). | TB | Tân | Chưa pass |
+
+#### KB06 – Trạng thái chế biến (US05)
+**Tiền điều kiện:** có đơn gồm 2 món, cả hai ở trạng thái Mới.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC06-01 | Đổi trạng thái Mới → Đang làm → Đã xong cho 1 món | 1. Đổi món 1 sang Đang làm<br>2. Đổi sang Đã xong | Trạng thái hiển thị đúng sau mỗi bước | Chưa có trạng thái chế biến (Mới/Đang làm/Đã xong) trong mã và giao diện (xem BUG-04). | C | Tài | Chưa pass |
+| TC06-02 | Trạng thái giữ nguyên sau khi tải lại | 1. Đổi trạng thái<br>2. Tải lại trang (F5) | Trạng thái vẫn đúng như đã đổi | Chưa có chức năng nên không có gì để giữ lại sau khi tải lại (BUG-04). | C | Tài | Chưa pass |
+| TC06-03 | Mọi món xong thì đơn “Đã xong” | 1. Đổi cả 2 món sang Đã xong | Đơn hiển thị Đã xong; trước đó (mới xong 1 món) đơn chưa Đã xong | Chưa có chức năng (BUG-04). | C | Tài | Chưa pass |
+| TC06-04 | Lưu thất bại | 1. Ngắt kết nối mạng hoặc dừng cơ sở dữ liệu<br>2. Đổi trạng thái | Hiển thị thông báo lỗi; không hiển thị trạng thái giả | Chưa có chức năng (BUG-04). | TB | Tài | Chưa pass |
+
+#### KB07 – Thống kê đơn và doanh thu theo nguồn (US06)
+**Tiền điều kiện:** đăng nhập bằng Quản lý.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC07-01 | Ngày có 10 đơn: 4 QR, 3 đặt bàn, 3 tại quầy | 1. Mở bảng điều khiển, chọn ngày đó | Số đơn theo nguồn hiển thị 4/3/3 | Trang Thống kê có doanh thu theo ngày, món bán chạy, số hóa đơn; không có số đơn và doanh thu theo nguồn (xem BUG-02). | C | Tài | Chưa pass |
+| TC07-02 | Tổng doanh thu theo nguồn khớp cả ngày | 1. Cộng doanh thu 3 nguồn<br>2. So với tổng doanh thu cả ngày | Hai số bằng nhau | Không có thống kê theo nguồn nên không đối chiếu được (BUG-02). | C | Tài | Chưa pass |
+| TC07-03 | Ngày chưa có đơn | 1. Chọn ngày không có đơn | Hiện thông báo chưa có dữ liệu | Khoảng không có dữ liệu hiện “Chưa có khoản thu nào trong khoảng này.” | TB | Tài | Pass |
+| TC07-04 | Hóa đơn đã hủy không vào doanh thu | 1. Hủy 1 hóa đơn chưa thu<br>2. Xem lại thống kê | Doanh thu không tính hóa đơn đã hủy | Doanh thu chỉ tính khoản thanh toán thành công; hóa đơn hủy chưa thu đồng nào nên không vào doanh thu. | C | Tài | Pass |
+
+#### KB08 – Chấm công Check-in/Check-out (US07)
+**Tiền điều kiện:** đăng nhập bằng Nhân viên.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC08-01 | Check-in khi đang Offline | 1. Bấm Check-in | Trạng thái chuyển Online; lưu giờ vào | Chưa có Check-in/Check-out hay trạng thái Online/Offline (xem BUG-05). | TB | Tài | Chưa pass |
+| TC08-02 | Check-in khi đang Online | 1. Bấm Check-in lần nữa | Báo lỗi; không tạo bản ghi trùng | Chưa có chức năng (BUG-05). | TB | Tài | Chưa pass |
+| TC08-03 | Check-out khi đang Online | 1. Bấm Check-out | Trạng thái chuyển Offline; lưu giờ ra | Chưa có chức năng (BUG-05). | TB | Tài | Chưa pass |
+| TC08-04 | Quản lý thấy trạng thái nhân viên | 1. Đăng nhập Quản lý, mở danh sách nhân viên | Hiển thị đúng Online/Offline của từng người | Chưa có chức năng (BUG-05). | T | Tài | Chưa pass |
+
+#### KB09 – Khách quét QR gọi món (US08)
+**Tiền điều kiện:** có mã QR của bàn số 3 và thực đơn đang có món.
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC09-01 | Quét QR, chọn món và gửi | 1. Quét QR bàn 3<br>2. Chọn món A SL 2<br>3. Gửi | Tạo đơn gắn bàn 3, nguồn “QR tại bàn”, tổng 90.000 | Quét QR → mở bàn → gửi món thì món vào hóa đơn của bàn, tổng 90.000 đúng; nhưng đơn không có nguồn “QR tại bàn” (xem BUG-02). | C | Sơn | Chưa pass |
+| TC09-02 | Đơn QR hiện trong danh sách thẻ đơn | 1. Đăng nhập Nhân viên, mở danh sách đơn | Thấy thẻ đơn mới với nguồn “QR tại bàn”, trạng thái chế biến Mới | Hóa đơn QR hiện trong danh sách hóa đơn, nhưng không có nguồn và không có trạng thái chế biến (BUG-02, BUG-04). | C | Sơn | Chưa pass |
+| TC09-03 | Gửi đơn QR khi chưa chọn món | 1. Quét QR, không chọn món<br>2. Gửi | Báo lỗi; không tạo đơn | Giỏ trống thì không tạo đơn; trang giỏ hiện “Giỏ món đang trống.” | TB | Sơn | Pass |
+
+#### KB10 – Khách đặt bàn trước (US09)
+**Tiền điều kiện:** đăng nhập bằng Khách hàng. Quy tắc: nhận đặt 10:00–21:00 mỗi 30 phút; đặt trước ≥ 30 phút và ≤ 30 ngày; tối đa 20 người; tối đa 5 lịch/khách. *Giả sử hiện tại là 09:00 ngày D.*
+
+| Mã TC | Mô tả và dữ liệu | Các bước thực hiện | Kết quả mong đợi | Kết quả thực tế | Ưu tiên | Người kiểm thử | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| TC10-01 | Đặt hợp lệ: ngày D+1, 18:00, 4 người | 1. Mở Đặt bàn<br>2. Nhập thông tin<br>3. Gửi | Đặt thành công; bàn được giữ 2 giờ | Đặt hợp lệ thì tạo lịch “Đã xác nhận”; bàn bị coi là bận trong cửa sổ 2 giờ quanh giờ đặt. | C | Tài | Pass |
+| TC10-02 | Giờ ngoài khung: 09:30 và 21:30 | 1. Chọn giờ 09:30, gửi<br>2. Chọn giờ 21:30, gửi | Cả hai báo lỗi ngoài giờ nhận đặt | Giờ ngoài 10:00–21:00 báo “Giờ đặt không hợp lệ.” | C | Tài | Pass |
+| TC10-03 | Giờ không đúng bước 30 phút: 18:15 | 1. Chọn 18:15, gửi | Báo lỗi hoặc không cho chọn giờ lẻ | Giờ lẻ như 18:15 không nằm trong danh sách giờ (bước 30 phút) nên bị từ chối. | TB | Tài | Pass |
+| TC10-04 | Đặt sát giờ: sau hiện tại dưới 30 phút | 1. Chọn giờ cách hiện tại 20 phút, gửi | Báo lỗi phải đặt trước ít nhất 30 phút | Báo “Vui lòng đặt trước ít nhất 30 phút.” | C | Tài | Pass |
+| TC10-05 | Đặt quá xa: sau 31 ngày | 1. Chọn ngày D+31, gửi | Báo lỗi vượt 30 ngày | Ngày sau 30 ngày báo “Chỉ nhận đặt bàn trong vòng 30 ngày tới.” | TB | Tài | Pass |
+| TC10-06 | Số người: 20 và 21 | 1. Đặt 20 người, gửi<br>2. Đặt 21 người, gửi | (1) Thành công. (2) Báo lỗi vượt tối đa 20 người | 21 người báo lỗi (tối đa 20). 20 người hợp lệ về quy tắc, nhưng chỉ đặt được khi có bàn từ 20 chỗ trở lên trong dữ liệu. | C | Tài | Pass |
+| TC10-07 | Quá 5 lịch của một khách | 1. Đặt thành công 5 lịch<br>2. Đặt lịch thứ 6 | Lịch thứ 6 bị từ chối kèm thông báo; đơn đặt hợp lệ có nguồn “Đặt bàn trước” trong danh sách thẻ đơn | Lịch thứ 6 bị từ chối đúng (“đang giữ 5 lịch”); nhưng đơn đặt bàn chưa có nguồn “Đặt bàn trước” trong danh sách đơn (BUG-02). | C | Tài | Chưa pass |
+
+### 10.5. Ma trận truy vết và kế hoạch kiểm thử theo Sprint
+
+| Sprint | Kịch bản kiểm thử | User Story | Số TC | Sản phẩm kiểm thử đầu ra |
+|---|---|---|---|---|
+| Sprint 1 | KB01 | US01 | 7 | Bảng kết quả KB01 |
+| Sprint 2 | KB02 | US02 | 6 | Bảng kết quả KB02 |
+| Sprint 3 | KB03, KB04, KB09 (TC09-01) | US03, US08 | 22 | Bảng kết quả KB03–KB04 |
+| Sprint 4 | KB05, KB06, KB10 | US04, US05, US09 | 17 | Bảng kết quả KB05–KB06, KB10 |
+| Sprint 5 | KB07, KB08, KB09; **hồi quy toàn bộ KB01–KB10** | US06, US07, KT-01 | 57 | Biên bản kiểm thử hồi quy (KT-01) |
+
+### 10.6. Danh sách lỗi phát hiện
+
+| Mã lỗi | Test case | Mô tả lỗi | Mức độ | Người phụ trách | Trạng thái |
+|---|---|---|---|---|---|
+| BUG-01 | TC01-06, TC01-07 | US01 yêu cầu chủ quán đăng ký bằng email và khai báo thông tin quán. Website chỉ có đăng ký khách hàng bằng SĐT; tài khoản nhân viên do Quản lý tạo; email không bị kiểm tra trùng | Trung bình | Nhóm 1 | Mở |
+| BUG-02 | TC03-01, TC05-01, TC05-02, TC05-06, TC07-01, TC07-02, TC09-01, TC09-02, TC10-07 | Chưa có “nguồn đơn” (Tại quầy, QR tại bàn, Đặt bàn trước) nên chưa hiển thị, lọc và thống kê theo nguồn được. Đã dự kiến ở Sprint 3–5 | Cao | Nhóm 1 | Mở |
+| BUG-03 | TC03-01, TC03-02 | Chưa có màn hình lập đơn một lần nhiều món; chọn bàn là tạo ngay hóa đơn rỗng, chỉ chặn ở bước thanh toán | Trung bình | Nhóm 1 | Mở |
+| BUG-04 | TC06-01 đến TC06-04, TC09-02 | Chưa có trạng thái chế biến (Mới, Đang làm, Đã xong). Đã dự kiến ở Sprint 4 | Cao | Nhóm 1 | Mở |
+| BUG-05 | TC08-01 đến TC08-04 | Chưa có chấm công Check-in/Check-out và trạng thái Online/Offline. Đã dự kiến ở Sprint 5 | Trung bình | Nhóm 1 | Mở |
+
+### 10.7. Bảng tổng hợp kết quả theo kịch bản
+
+| Kịch bản | Tổng TC | Pass | Chưa pass | Tỷ lệ Pass |
+|---|---|---|---|---|
+| KB01 | 7 | 5 | 2 | 71,4% |
+| KB02 | 6 | 6 | 0 | 100,0% |
+| KB03 | 6 | 4 | 2 | 66,7% |
+| KB04 | 10 | 10 | 0 | 100,0% |
+| KB05 | 6 | 3 | 3 | 50,0% |
+| KB06 | 4 | 0 | 4 | 0,0% |
+| KB07 | 4 | 2 | 2 | 50,0% |
+| KB08 | 4 | 0 | 4 | 0,0% |
+| KB09 | 3 | 1 | 2 | 33,3% |
+| KB10 | 7 | 6 | 1 | 85,7% |
+| **Tổng** | **57** | **37** | **20** | **64,9%** |
+
+### 10.8. Tổng hợp theo người kiểm thử
+
+| Người kiểm thử | Tổng TC | Pass | Chưa pass | Tỷ lệ Pass |
+|---|---|---|---|---|
+| Phạm Tiến Sơn | 19 | 17 | 2 | 89,5% |
+| Nguyễn Nhật Tân | 19 | 12 | 7 | 63,2% |
+| Đỗ Anh Tài | 19 | 8 | 11 | 42,1% |
+| **Tổng** | **57** | **37** | **20** | **64,9%** |
+
+**Nhận xét kết quả:** 37/57 test case Pass (64,9%). Toàn bộ phần website đã có (đăng nhập, phân quyền, thực đơn, hóa đơn, thanh toán, chuyển khoản, đặt bàn, QR) đạt yêu cầu. 20 test case Chưa pass đều thuộc phần chưa phát triển theo kế hoạch Sprint 3–5 (nguồn đơn, thẻ đơn, trạng thái chế biến, thống kê theo nguồn, chấm công) hoặc lệch tiêu chí US01 (BUG-01). Các kết quả trên là kiểm thử tĩnh trên mã nguồn; cần chạy thực tế để xác nhận lại, đặc biệt các test case về xử lý đồng thời (TC04-10) và dữ liệu bàn (TC10-06).
 
 ## KẾT LUẬN
 

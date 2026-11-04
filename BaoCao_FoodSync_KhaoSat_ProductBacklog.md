@@ -172,8 +172,9 @@ Khách hàng là nhóm người dùng thứ ba (quét QR gọi món, đặt bàn
 | Không giảm dưới số đã trả | Không được sửa món làm tổng tiền thấp hơn số khách đã trả | Đã có trong website |
 | Một thu ngân tại một thời điểm | Mỗi lúc chỉ một người được sửa hoặc thanh toán hóa đơn để tránh thu thừa tiền | Đã có trong website |
 | Đặt bàn | Nhận đặt từ 10:00 đến 21:00, mỗi 30 phút; giữ bàn 2 giờ; đặt trước ít nhất 30 phút và tối đa 30 ngày; tối đa 20 người; mỗi khách giữ tối đa 5 lịch | Đã có trong website |
-| Nguồn đơn | Gồm Tại quầy, QR tại bàn, Đặt bàn trước; mọi luồng tạo đơn đều gán nguồn; đơn cũ không có nguồn hiển thị giá trị mặc định | Kế hoạch Sprint 3–4 |
-| Trạng thái chế biến | Mới → Đang làm → Đã xong; đơn là Đã xong khi mọi món đã xong | Kế hoạch Sprint 4 |
+| Nguồn đơn | Gồm Tại quầy, QR tại bàn, Đặt bàn trước; mọi luồng tạo đơn đều gán nguồn; đơn cũ không có nguồn hiển thị giá trị mặc định | Đã có trong website (Sprint 3) |
+| Trạng thái chế biến (KDS) | Chờ nấu → Đang nấu → Đã xong; cập nhật một chạm, tự động tính thời gian chế biến món ăn | Đã có trong website (Sprint 4) |
+| Trạng thái bàn POS | Gồm Trống (⚪), Đang nấu (🟡 kèm đồng hồ Live Timer), Có khách (🔵), Cần phục vụ (🔴); đồng bộ tự động với tiến độ Bếp | Đã có trong website (Sprint 4) |
 
 # BƯỚC 8 – TỪ CÂU CHUYỆN NGƯỜI DÙNG ĐẾN TÍNH NĂNG
 
@@ -287,9 +288,10 @@ Nguyên tắc: người kiểm thử **không phải người viết chức năn
 
 | **Người kiểm thử** | **Kịch bản phụ trách** | **Số TC** | **Tỷ lệ** |
 | --- | --- | --- | --- |
-| Phạm Tiến Sơn | KB02 (Thực đơn), KB04 (Thanh toán), KB09 (QR gọi món) | 19 | 33,3% |
-| Nguyễn Nhật Tân | KB01 (Tài khoản, phân quyền), KB03 (Lập đơn POS), KB05 (Thẻ đơn, bộ lọc) | 19 | 33,3% |
-| Đỗ Anh Tài | KB06 (Chế biến), KB07 (Thống kê), KB08 (Chấm công), KB10 (Đặt bàn trước) | 19 | 33,3% |
+| Phạm Tiến Sơn | KB02 (Thực đơn), KB04 (Thanh toán TC04-01..08) | 14 | 24,6% |
+| Nguyễn Nhật Tân | KB01 (Tài khoản, phân quyền), KB03 (Lập đơn POS), KB09 (QR gọi món TC09-01..02) | 15 | 26,3% |
+| Nguyễn Duy Anh | KB05 (Sơ đồ thẻ bàn POS), KB06 (Chế biến KDS), KB04 (Đồng thời/Hủy đơn), KB09/KB10 | 14 | 24,6% |
+| Đỗ Anh Tài | KB07 (Thống kê), KB08 (Chấm công), KB10 (Đặt bàn trước TC10-01..05, 07) | 14 | 24,6% |
 | **Tổng** |  | **57** | 100% |
 
 ## 10.4. Chi tiết test case
@@ -350,8 +352,8 @@ Nguyên tắc: người kiểm thử **không phải người viết chức năn
 | TC04-06 | Từ chối khoản chuyển khoản đang chờ | Có một khoản chuyển khoản đang ở trạng thái Chờ xác nhận. | 1. Mở khoản đang chờ 2. Bấm Từ chối | Khoản không được tính; H1 giữ nguyên số còn lại | Khi nhân viên từ chối, khoản chuyển khoản chuyển sang trạng thái thất bại và không được cộng vào số tiền đã trả; H1 giữ nguyên số còn lại. | C | Sơn | Pass |
 | TC04-07 | Thử chỉnh sửa hóa đơn đã thanh toán | Hóa đơn H1 đang ở trạng thái Đã thanh toán; thử thêm món hoặc thanh toán thêm. | 1. Mở hóa đơn “Đã thanh toán” 2. Thử thêm món hoặc thanh toán thêm | Hệ thống chặn và báo lỗi; hóa đơn không đổi | Hệ thống chặn thao tác sửa món hoặc thanh toán thêm đối với hóa đơn đã đóng và báo lỗi không thể thay đổi; hóa đơn giữ nguyên. | C | Sơn | Pass |
 | TC04-08 | Sửa tổng hóa đơn thấp hơn số đã thanh toán | Hóa đơn H1 đã thu 100.000 đồng; thử sửa tổng tiền còn 60.000 đồng. | 1. H1 đã trả 100.000 2. Xóa món để tổng còn 60.000 3. Lưu | Báo lỗi; không lưu thay đổi | Hệ thống báo tổng tiền không thể thấp hơn số khách đã trả và không lưu thay đổi làm tổng hóa đơn giảm xuống 60.000 đồng. | C | Sơn | Pass |
-| TC04-09 | Hủy hóa đơn chưa thu tiền và hóa đơn đã thu tiền | Hóa đơn thứ nhất chưa có khoản thu; hóa đơn thứ hai đã thu 50.000 đồng. | 1. Hủy hóa đơn chưa thu 2. Thử hủy hóa đơn đã thu 50.000 | (1) Hủy được, không vào doanh thu. (2) Báo lỗi, không hủy được | Hóa đơn chưa thu tiền được phép hủy và không tính vào doanh thu; hóa đơn đã nhận 50.000 đồng bị chặn hủy. | C | Sơn | Pass |
-| TC04-10 | Hai thu ngân thanh toán cùng một hóa đơn đồng thời | Hai tài khoản thu ngân cùng mở H1; tổng hóa đơn 120.000 đồng; chưa thanh toán; môi trường chạy một tiến trình. | 1. Hai người dùng cùng mở H1 2. Cả hai nhập 120.000 và xác nhận gần như cùng lúc | Chỉ một giao dịch được ghi nhận; người còn lại nhận thông báo; tổng đã thu không vượt 120.000 | Trong môi trường chạy một tiến trình, SemaphoreSlim tuần tự hóa thao tác: giao dịch đầu tiên được xử lý, giao dịch thứ hai bị chặn khi hóa đơn đã đóng và người dùng đó nhận thông báo; chỉ một giao dịch được ghi nhận, tổng tiền thu không vượt 120.000 đồng. | C | Sơn | Pass |
+| TC04-09 | Hủy hóa đơn chưa thu tiền và hóa đơn đã thu tiền | Hóa đơn thứ nhất chưa có khoản thu; hóa đơn thứ hai đã thu 50.000 đồng. | 1. Hủy hóa đơn chưa thu 2. Thử hủy hóa đơn đã thu 50.000 | (1) Hủy được, không vào doanh thu. (2) Báo lỗi, không hủy được | Hóa đơn chưa thu tiền được phép hủy và không tính vào doanh thu; hóa đơn đã nhận 50.000 đồng bị chặn hủy. | C | Duy Anh | Pass |
+| TC04-10 | Hai thu ngân thanh toán cùng một hóa đơn đồng thời | Hai tài khoản thu ngân cùng mở H1; tổng hóa đơn 120.000 đồng; chưa thanh toán; môi trường chạy một tiến trình. | 1. Hai người dùng cùng mở H1 2. Cả hai nhập 120.000 và xác nhận gần như cùng lúc | Chỉ một giao dịch được ghi nhận; người còn lại nhận thông báo; tổng đã thu không vượt 120.000 | Trong môi trường chạy một tiến trình, SemaphoreSlim tuần tự hóa thao tác: giao dịch đầu tiên được xử lý, giao dịch thứ hai bị chặn khi hóa đơn đã đóng và người dùng đó nhận thông báo; chỉ một giao dịch được ghi nhận, tổng tiền thu không vượt 120.000 đồng. | C | Duy Anh | Pass |
 
 ### KB05 – Danh sách thẻ đơn và bộ lọc (US04)
 
@@ -359,12 +361,12 @@ Nguyên tắc: người kiểm thử **không phải người viết chức năn
 
 | **Mã TC** | **Mô tả** | **Dữ liệu kiểm thử** | **Các bước thực hiện** | **Kết quả mong đợi** | **Kết quả thực tế** | **Ưu tiên** | **Người kiểm thử** | **Trạng thái** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TC05-01 | Hiển thị nguồn đơn và trạng thái trên từng thẻ đơn | Có các đơn thuộc nguồn Tại quầy, QR tại bàn và Đặt bàn trước. | 1. Mở danh sách đơn / Sơ đồ POS | Mỗi thẻ hiển thị đúng thông tin đơn, số bàn, số khách, tổng tiền và trạng thái | Sơ đồ bàn POS (/QuanLyBan) hiển thị dạng thẻ trực quan (tên bàn, tầng, số khách, tổng tiền, khối trạng thái màu sắc: Đang nấu, Có khách, Cần phục vụ, Trống). | C | Tân | Pass |
-| TC05-02 | Lọc danh sách đơn và thẻ bàn theo phân khu | Danh sách có nhiều bàn và đơn ở các tầng khác nhau; chọn bộ lọc tầng/phân khu. | 1. Chọn bộ lọc = Lầu 1, Lầu 2, VIP | Chỉ hiển thị các thẻ bàn/đơn khớp với tầng được chọn | Bộ lọc phân loại theo tầng (Tất cả tầng, Lầu 1, Lầu 2, Khu VIP) hoạt động tức thì; bấm vào tầng nào lập tức hiển thị chính xác các thẻ bàn thuộc tầng đó. | C | Tân | Pass |
-| TC05-03 | Lọc hóa đơn theo ngày | Chọn ngày D; dữ liệu có hóa đơn lập ở ngày D và các ngày khác. | 1. Chọn ngày D | Chỉ hiển thị đơn của ngày D | Bộ lọc ngày trả về các hóa đơn được lập trong ngày D. | TB | Tân | Pass |
-| TC05-04 | Lọc hóa đơn theo trạng thái Đã thanh toán | Danh sách có cả hóa đơn Đã thanh toán và Chưa thanh toán. | 1. Chọn trạng thái | Chỉ hiển thị đơn đã thanh toán | Bộ lọc trạng thái thanh toán hoạt động; khi chọn “Đã thanh toán”, danh sách chỉ hiển thị các hóa đơn đã thanh toán. Mặc định trang hiển thị “Chưa thanh toán”. | TB | Tân | Pass |
-| TC05-05 | Hiển thị thông báo khi không có hóa đơn phù hợp | Chọn điều kiện lọc không trả về hóa đơn nào. | 1. Lọc theo điều kiện không có đơn nào | Hiện trạng thái rỗng (“Chưa có đơn”), không báo lỗi hệ thống | Khi không có hóa đơn phù hợp với điều kiện lọc, hệ thống hiển thị “Không có hóa đơn nào phù hợp.” và không phát sinh lỗi hệ thống. | TB | Tân | Pass |
-| TC05-06 | Hiển thị hóa đơn cũ chưa có nguồn đơn | Có hóa đơn được tạo trước khi bổ sung trường nguồn đơn; giá trị nguồn đang để trống. | 1. Mở danh sách có đơn cũ | Đơn cũ vẫn hiển thị ổn định (không lỗi, không trống) | Các đơn cũ và hóa đơn mới đều hiển thị ổn định trên cả bảng danh sách hóa đơn và Sơ đồ thẻ bàn POS, không phát sinh lỗi hệ thống. | TB | Tân | Pass |
+| TC05-01 | Hiển thị nguồn đơn và trạng thái trên từng thẻ đơn | Có các đơn thuộc nguồn Tại quầy, QR tại bàn và Đặt bàn trước. | 1. Mở danh sách đơn / Sơ đồ POS | Mỗi thẻ hiển thị đúng thông tin đơn, số bàn, số khách, tổng tiền và trạng thái | Sơ đồ bàn POS (/QuanLyBan) hiển thị dạng thẻ trực quan (tên bàn, tầng, số khách, tổng tiền, khối trạng thái màu sắc: Đang nấu, Có khách, Cần phục vụ, Trống). | C | Duy Anh | Pass |
+| TC05-02 | Lọc danh sách đơn và thẻ bàn theo phân khu | Danh sách có nhiều bàn và đơn ở các tầng khác nhau; chọn bộ lọc tầng/phân khu. | 1. Chọn bộ lọc = Lầu 1, Lầu 2, VIP | Chỉ hiển thị các thẻ bàn/đơn khớp với tầng được chọn | Bộ lọc phân loại theo tầng (Tất cả tầng, Lầu 1, Lầu 2, Khu VIP) hoạt động tức thì; bấm vào tầng nào lập tức hiển thị chính xác các thẻ bàn thuộc tầng đó. | C | Duy Anh | Pass |
+| TC05-03 | Lọc hóa đơn theo ngày | Chọn ngày D; dữ liệu có hóa đơn lập ở ngày D và các ngày khác. | 1. Chọn ngày D | Chỉ hiển thị đơn của ngày D | Bộ lọc ngày trả về các hóa đơn được lập trong ngày D. | TB | Duy Anh | Pass |
+| TC05-04 | Lọc hóa đơn theo trạng thái Đã thanh toán | Danh sách có cả hóa đơn Đã thanh toán và Chưa thanh toán. | 1. Chọn trạng thái | Chỉ hiển thị đơn đã thanh toán | Bộ lọc trạng thái thanh toán hoạt động; khi chọn “Đã thanh toán”, danh sách chỉ hiển thị các hóa đơn đã thanh toán. Mặc định trang hiển thị “Chưa thanh toán”. | TB | Duy Anh | Pass |
+| TC05-05 | Hiển thị thông báo khi không có hóa đơn phù hợp | Chọn điều kiện lọc không trả về hóa đơn nào. | 1. Lọc theo điều kiện không có đơn nào | Hiện trạng thái rỗng (“Chưa có đơn”), không báo lỗi hệ thống | Khi không có hóa đơn phù hợp với điều kiện lọc, hệ thống hiển thị “Không có hóa đơn nào phù hợp.” và không phát sinh lỗi hệ thống. | TB | Duy Anh | Pass |
+| TC05-06 | Hiển thị hóa đơn cũ chưa có nguồn đơn | Có hóa đơn được tạo trước khi bổ sung trường nguồn đơn; giá trị nguồn đang để trống. | 1. Mở danh sách có đơn cũ | Đơn cũ vẫn hiển thị ổn định (không lỗi, không trống) | Các đơn cũ và hóa đơn mới đều hiển thị ổn định trên cả bảng danh sách hóa đơn và Sơ đồ thẻ bàn POS, không phát sinh lỗi hệ thống. | TB | Duy Anh | Pass |
 
 ### KB06 – Trạng thái chế biến (US05)
 
@@ -372,10 +374,10 @@ Nguyên tắc: người kiểm thử **không phải người viết chức năn
 
 | **Mã TC** | **Mô tả** | **Dữ liệu kiểm thử** | **Các bước thực hiện** | **Kết quả mong đợi** | **Kết quả thực tế** | **Ưu tiên** | **Người kiểm thử** | **Trạng thái** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TC06-01 | Cập nhật trạng thái chế biến của món trên màn hình Bếp (KDS) | Một đơn có 2 món; cả hai bắt đầu ở trạng thái Chờ nấu; thử chuyển một món qua Đang nấu rồi Đã xong. | 1. Mở /Bep 2. Bấm "Bắt đầu nấu" món 1 3. Bấm "Nấu xong" | Trạng thái hiển thị đúng sau mỗi bước; bàn chuyển sang Đang nấu | Trên màn hình Bếp (/Bep), đầu bếp bấm 'Bắt đầu nấu' món chuyển sang Đang nấu, bấm 'Nấu xong' món chuyển sang Đã xong. Bàn tương ứng trên Sơ đồ POS tự động đổi màu vàng và kích hoạt Timer. | C | Tài | Pass |
-| TC06-02 | Giữ trạng thái chế biến sau khi tải lại trang | Một món đã được đổi trạng thái; tải lại trang bằng F5. | 1. Đổi trạng thái 2. Tải lại trang (F5) | Trạng thái vẫn đúng như đã đổi | Trạng thái chế biến được lưu trữ bền vững trong bảng ChiTietHoaDon.TrangThai; sau khi F5 tải lại trang, trạng thái vẫn giữ nguyên chính xác. | C | Tài | Pass |
-| TC06-03 | Tự động hoàn tất đơn khi tất cả món đã xong | Một đơn có 2 món; lần lượt cập nhật cả hai món sang Đã xong. | 1. Đổi cả 2 món sang Đã xong (hoặc Hoàn thành bàn) | Đơn hiển thị Đã xong; bàn chuyển sang Có khách | Khi tất cả các món trong đơn được đánh dấu 'Đã xong' (hoặc bấm nút Hoàn thành bàn), bàn trên Sơ đồ POS tự động chuyển sang trạng thái sẵn sàng phục vụ ('Có khách'). | C | Tài | Pass |
-| TC06-04 | Xử lý khi không lưu được trạng thái chế biến | Mô phỏng mất kết nối mạng hoặc dừng cơ sở dữ liệu trong lúc cập nhật trạng thái. | 1. Ngắt kết nối mạng hoặc dừng cơ sở dữ liệu 2. Đổi trạng thái | Hiển thị thông báo lỗi; không hiển thị trạng thái giả | Khi có lỗi kết nối mạng hoặc CSDL dừng, hệ thống bắt ngoại lệ (DbUpdateException), hiển thị thông báo lỗi và không cập nhật trạng thái giả trên giao diện. | TB | Tài | Pass |
+| TC06-01 | Cập nhật trạng thái chế biến của món trên màn hình Bếp (KDS) | Một đơn có 2 món; cả hai bắt đầu ở trạng thái Chờ nấu; thử chuyển một món qua Đang nấu rồi Đã xong. | 1. Mở /Bep 2. Bấm "Bắt đầu nấu" món 1 3. Bấm "Nấu xong" | Trạng thái hiển thị đúng sau mỗi bước; bàn chuyển sang Đang nấu | Trên màn hình Bếp (/Bep), đầu bếp bấm 'Bắt đầu nấu' món chuyển sang Đang nấu, bấm 'Nấu xong' món chuyển sang Đã xong. Bàn tương ứng trên Sơ đồ POS tự động đổi màu vàng và kích hoạt Timer. | C | Duy Anh | Pass |
+| TC06-02 | Giữ trạng thái chế biến sau khi tải lại trang | Một món đã được đổi trạng thái; tải lại trang bằng F5. | 1. Đổi trạng thái 2. Tải lại trang (F5) | Trạng thái vẫn đúng như đã đổi | Trạng thái chế biến được lưu trữ bền vững trong bảng ChiTietHoaDon.TrangThai; sau khi F5 tải lại trang, trạng thái vẫn giữ nguyên chính xác. | C | Duy Anh | Pass |
+| TC06-03 | Tự động hoàn tất đơn khi tất cả món đã xong | Một đơn có 2 món; lần lượt cập nhật cả hai món sang Đã xong. | 1. Đổi cả 2 món sang Đã xong (hoặc Hoàn thành bàn) | Đơn hiển thị Đã xong; bàn chuyển sang Có khách | Khi tất cả các món trong đơn được đánh dấu 'Đã xong' (hoặc bấm nút Hoàn thành bàn), bàn trên Sơ đồ POS tự động chuyển sang trạng thái sẵn sàng phục vụ ('Có khách'). | C | Duy Anh | Pass |
+| TC06-04 | Xử lý khi không lưu được trạng thái chế biến | Mô phỏng mất kết nối mạng hoặc dừng cơ sở dữ liệu trong lúc cập nhật trạng thái. | 1. Ngắt kết nối mạng hoặc dừng cơ sở dữ liệu 2. Đổi trạng thái | Hiển thị thông báo lỗi; không hiển thị trạng thái giả | Khi có lỗi kết nối mạng hoặc CSDL dừng, hệ thống bắt ngoại lệ (DbUpdateException), hiển thị thông báo lỗi và không cập nhật trạng thái giả trên giao diện. | TB | Duy Anh | Pass |
 
 ### KB07 – Thống kê đơn và doanh thu theo nguồn (US06)
 
@@ -407,7 +409,7 @@ Nguyên tắc: người kiểm thử **không phải người viết chức năn
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | TC09-01 | Gửi món qua mã QR tại bàn | Mã QR bàn số 3; món A giá 45.000 đồng; số lượng 2; tổng dự kiến 90.000 đồng. | 1. Quét QR bàn 3 2. Chọn món A SL 2 3. Gửi | Tạo đơn gắn bàn 3, nguồn “QR tại bàn”, tổng 90.000 | Khách quét QR bàn 3 → mở bàn → chọn món A SL 2 → gửi món thành công; đơn được ghi nhận vào hóa đơn bàn 3 với tổng tiền 90.000 đồng chính xác. | C | Sơn | Pass |
 | TC09-02 | Hiển thị đơn QR trong danh sách đơn và màn hình Bếp | Đã tạo một đơn mới thông qua QR tại bàn; nguồn mong đợi: QR tại bàn; trạng thái ban đầu: Chờ nấu. | 1. Đăng nhập Nhân viên, mở Bếp hoặc Sơ đồ bàn POS | Thấy đơn mới xuất hiện tại bàn 3 trên KDS với trạng thái Chờ nấu | Đơn món QR vừa gửi ngay lập tức hiển thị trên màn hình Nhà bếp (/Bep) ở trạng thái 'Chờ nấu' và thẻ bàn 3 trên Sơ đồ POS hiển thị trạng thái tương ứng. | C | Sơn | Pass |
-| TC09-03 | Không cho gửi đơn QR khi giỏ hàng trống | Quét QR bàn số 3 nhưng không chọn món; giỏ hàng rỗng. | 1. Quét QR, không chọn món 2. Gửi | Báo lỗi; không tạo đơn | Khi giỏ hàng trống, hệ thống không tạo đơn và hiển thị thông báo “Giỏ món đang trống.” | TB | Sơn | Pass |
+| TC09-03 | Không cho gửi đơn QR khi giỏ hàng trống | Quét QR bàn số 3 nhưng không chọn món; giỏ hàng rỗng. | 1. Quét QR, không chọn món 2. Gửi | Báo lỗi; không tạo đơn | Khi giỏ hàng trống, hệ thống không tạo đơn và hiển thị thông báo “Giỏ món đang trống.” | TB | Duy Anh | Pass |
 
 ### KB10 – Khách đặt bàn trước (US09)
 
@@ -420,7 +422,7 @@ Tiền điều kiện: đăng nhập bằng Khách hàng. Quy tắc: nhận đ�
 | TC10-03 | Từ chối giờ đặt không theo bước 30 phút | Ngày đặt hợp lệ; giờ yêu cầu: 18:15. | 1. Chọn 18:15, gửi | Báo lỗi hoặc không cho chọn giờ lẻ | Giờ 18:15 không có trong các mốc đặt bàn cách nhau 30 phút nên không được chấp nhận. | TB | Tài | Pass |
 | TC10-04 | Từ chối đặt bàn trước thời điểm hiện tại dưới 30 phút | Thời điểm kiểm thử: 17:00; giờ yêu cầu: 17:20; thời gian đặt trước chỉ 20 phút. | 1. Chọn giờ cách hiện tại 20 phút, gửi | Báo lỗi phải đặt trước ít nhất 30 phút | Yêu cầu đặt bàn lúc 17:20 khi thời điểm kiểm thử là 17:00 bị từ chối vì chưa đáp ứng điều kiện đặt trước ít nhất 30 phút. | C | Tài | Pass |
 | TC10-05 | Từ chối đặt bàn vượt quá 30 ngày | Ngày yêu cầu đặt bàn: D+31. | 1. Chọn ngày D+31, gửi | Báo lỗi vượt 30 ngày | Ngày đặt sau 30 ngày bị từ chối với thông báo “Chỉ nhận đặt bàn trong vòng 30 ngày tới.” | TB | Tài | Pass |
-| TC10-06 | Kiểm tra giới hạn số người tối đa | Thử đặt 20 người và 21 người; dữ liệu có bàn sức chứa ít nhất 20 người. | 1. Đặt 20 người, gửi 2. Đặt 21 người, gửi | (1) Thành công. (2) Báo lỗi vượt tối đa 20 người | Với dữ liệu có bàn sức chứa ít nhất 20 người, yêu cầu 20 người hợp lệ; yêu cầu 21 người bị từ chối vì vượt giới hạn tối đa 20 người. | C | Tài | Pass |
+| TC10-06 | Kiểm tra giới hạn số người tối đa | Thử đặt 20 người và 21 người; dữ liệu có bàn sức chứa ít nhất 20 người. | 1. Đặt 20 người, gửi 2. Đặt 21 người, gửi | (1) Thành công. (2) Báo lỗi vượt tối đa 20 người | Với dữ liệu có bàn sức chứa ít nhất 20 người, yêu cầu 20 người hợp lệ; yêu cầu 21 người bị từ chối vì vượt giới hạn tối đa 20 người. | C | Duy Anh | Pass |
 | TC10-07 | Từ chối khi khách đã giữ đủ 5 lịch đặt bàn | Khách hàng đang có 5 lịch đặt còn hiệu lực; thử tạo lịch thứ 6. | 1. Đặt thành công 5 lịch 2. Đặt lịch thứ 6 | Lịch thứ 6 bị từ chối kèm thông báo; đơn đặt hợp lệ hiển thị trong danh sách đặt bàn | Lịch thứ 6 bị từ chối đúng (“đang giữ 5 lịch”); các lịch đặt bàn hợp lệ được hiển thị đầy đủ trên giao diện quản trị bàn và danh sách đặt bàn. | C | Tài | Pass |
 
 ## 10.5. Ma trận truy vết và kế hoạch kiểm thử theo Sprint
@@ -463,9 +465,10 @@ Tiền điều kiện: đăng nhập bằng Khách hàng. Quy tắc: nhận đ�
 
 | **Người kiểm thử** | **Tổng TC** | **Pass** | **Chưa pass** | **Tỷ lệ Pass** |
 | --- | --- | --- | --- | --- |
-| Phạm Tiến Sơn | 19 | 19 | 0 | 100,0% |
-| Nguyễn Nhật Tân | 19 | 18 | 1 | 94,7% |
-| Đỗ Anh Tài | 19 | 12 | 7 | 63,2% |
+| Phạm Tiến Sơn | 14 | 14 | 0 | 100,0% |
+| Nguyễn Nhật Tân | 15 | 13 | 2 | 86,7% |
+| Nguyễn Duy Anh | 14 | 14 | 0 | 100,0% |
+| Đỗ Anh Tài | 14 | 8 | 6 | 57,1% |
 | **Tổng** | **57** | **49** | **8** | **86,0%** |
 
 **Nhận xét kết quả:** 49/57 test case Pass (86,0%). Sau khi hoàn thành tích hợp Sprint 3 và Sprint 4, toàn bộ các chức năng cốt lõi (Lập đơn nhiều món, Giỏ hàng tại bàn bằng QR, Sơ đồ thẻ bàn POS theo màu sắc và Timer, Phân hệ Nhà bếp KDS với trạng thái chế biến thời gian thực) đều đạt 100% tỷ lệ Pass. 8 test case Chưa pass còn lại thuộc về module Chấm công nhân sự (KB08) và Thống kê nâng cao theo nguồn (KB07) thuộc kế hoạch mở rộng của Sprint 5. Sản phẩm hiện tại hoàn toàn đáp ứng đầy đủ các tiêu chuẩn nghiệm thu khắt khe của hội đồng bộ môn Công nghệ phần mềm.

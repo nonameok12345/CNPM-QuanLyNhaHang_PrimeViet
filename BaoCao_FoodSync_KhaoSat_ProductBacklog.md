@@ -227,7 +227,7 @@ Chưa đưa vào Backlog: quản lý nguyên liệu, kho, công thức mở rộ
 | Danh sách thẻ đơn và Sơ đồ bàn POS | Đã có | Đã hoàn thành Sơ đồ thẻ bàn POS, phân loại tầng và màu sắc trực quan (Sprint 4) |
 | Phân hệ Nhà bếp KDS & Trạng thái chế biến | Đã có | Đã hoàn thành KDS (Chờ nấu → Đang nấu → Đã xong) và đồng bộ bàn thời gian thực (Sprint 4) |
 | Thống kê theo nguồn, chấm công | Chưa có | Sprint 5 |
-| Tích hợp tự động Zalo, Grab, ShopeeFood | Chưa có, ngoài phạm vi MVP | Xem lại sau khi xác minh khả năng kết nối |
+| Tích hợp tự động giao đồ ăn ship | Chưa có, ngoài phạm vi MVP | Xem lại sau khi xác minh khả năng kết nối |
 
 # BƯỚC 10 – KẾ HOẠCH KIỂM THỬ
 

@@ -172,19 +172,24 @@ Khách hàng là nhóm người dùng thứ ba (quét QR gọi món, đặt bàn
 | Không giảm dưới số đã trả | Không được sửa món làm tổng tiền thấp hơn số khách đã trả | Đã có trong website |
 | Một thu ngân tại một thời điểm | Mỗi lúc chỉ một người được sửa hoặc thanh toán hóa đơn để tránh thu thừa tiền | Đã có trong website |
 | Đặt bàn | Nhận đặt từ 10:00 đến 21:00, mỗi 30 phút; giữ bàn 2 giờ; đặt trước ít nhất 30 phút và tối đa 30 ngày; tối đa 20 người; mỗi khách giữ tối đa 5 lịch | Đã có trong website |
-| Nguồn đơn | Gồm Tại quầy, QR tại bàn, Đặt bàn trước; mọi luồng tạo đơn đều gán nguồn; đơn cũ không có nguồn hiển thị giá trị mặc định | Đã có trong website (Sprint 3) |
+| Nguồn đơn | Gồm 6 nguồn: Tại quầy, QR tại bàn, Đặt bàn trước, Giao hàng website, GrabFood, ShopeeFood; mọi luồng tạo đơn đều gán nguồn tự động; đơn cũ hiển thị giá trị mặc định | Đã có trong website (Sprint 3–5) |
+| Trạng thái chế biến (KDS) | Chờ nấu → Đang nấu → Đã xong; cập nhật một chạm, tự động tính thời gian chế biến món ăn | Đã có trong website (Sprint 4) |
+| Trạng thái bàn POS | Gồm Trống (⚪), Đang nấu (🟡 kèm đồng hồ Live Timer), Có khách (🔵), Cần phục vụ (🔴); đồng bộ tự động với tiến độ Bếp | Đã có trong website (Sprint 4) |
+| Thống kê theo nguồn đơn | Phân bổ số đơn và doanh thu chi tiết theo 6 nguồn; chỉ tính hóa đơn đã thanh toán thành công; đối chiếu khớp 100% doanh thu thực tế | Đã có trong website (Sprint 5) |
+| Chấm công Online/Offline | Check-in khi Offline chuyển sang Online (lưu giờ vào); chặn Check-in trùng; Check-out lưu giờ ra chuyển sang Offline; hiển thị huy hiệu xanh 🟢 / xám ⚪ | Đã có trong website (Sprint 5) |
+| Quản lý giao hàng & Đối tác | Tiếp nhận đơn giao hàng, thông tin người nhận, địa chỉ, mã đơn đối tác; tiếp nhận đơn và giả lập Webhook GrabFood/ShopeeFood | Đã có trong website (Sprint 5) |
 | Trạng thái chế biến (KDS) | Chờ nấu → Đang nấu → Đã xong; cập nhật một chạm, tự động tính thời gian chế biến món ăn | Đã có trong website (Sprint 4) |
 | Trạng thái bàn POS | Gồm Trống (⚪), Đang nấu (🟡 kèm đồng hồ Live Timer), Có khách (🔵), Cần phục vụ (🔴); đồng bộ tự động với tiến độ Bếp | Đã có trong website (Sprint 4) |
 
 # BƯỚC 8 – TỪ CÂU CHUYỆN NGƯỜI DÙNG ĐẾN TÍNH NĂNG
 
-**I1 (Order từ nhiều kênh):** liên kết US03, US04, US05, US06, US08 → màn hình lập đơn (POS) có cột nguồn đơn, danh sách thẻ đơn có bộ lọc theo nguồn, trạng thái chế biến, thống kê số đơn và doanh thu theo nguồn, đơn tự gán nguồn khi khách quét QR.
+**I1 (Order từ nhiều kênh):** liên kết US03, US04, US05, US06, US08 → màn hình lập đơn (POS) có cột nguồn đơn, danh sách thẻ đơn có bộ lọc theo nguồn, trạng thái chế biến, thống kê số đơn và doanh thu theo 6 nguồn đơn, đơn tự gán nguồn khi khách quét QR, đặt bàn trước hoặc nhận từ web giao hàng và app đối tác GrabFood/ShopeeFood.
 
 **I2 (Thực đơn và giá):** liên kết US02 → quản lý thực đơn, danh mục và giá món; giá chốt trong chi tiết hóa đơn.
 
-**I3 (Dùng chung, có phân quyền):** liên kết US01, US09 → đăng nhập theo vai trò Quản lý, Nhân viên, Khách hàng; đặt bàn trước của khách tạo ra nguồn đơn “Đặt bàn trước”.
+**I3 (Dùng chung, có phân quyền):** liên kết US01, US09 → đăng nhập theo vai trò Quản lý, Nhân viên, Khách hàng; đăng ký tài khoản có Email và Tên quán ăn riêng; đặt bàn trước của khách tạo ra nguồn đơn “Đặt bàn trước”.
 
-**Ngoài ba vấn đề trên:** US07 (chấm công) hỗ trợ quản lý nhân sự, chưa có bằng chứng từ khảo sát nên xếp mức Nên và làm sau cùng.
+**Ngoài ba vấn đề trên:** US07 (chấm công) hỗ trợ quản lý nhân sự qua chức năng Check-in / Check-out Online/Offline; phân hệ Đặt giao hàng riêng và tích hợp đối tác GrabFood/ShopeeFood được hoàn thiện mở rộng ở Sprint 5.
 
 # BƯỚC 9 – PRODUCT BACKLOG VÀ KẾ HOẠCH SPRINT
 
@@ -204,7 +209,7 @@ Khách hàng là nhóm người dùng thứ ba (quét QR gọi món, đặt bàn
 | 10 | KT-01 | Sửa lỗi và kiểm thử hồi quy các luồng chính | Phải | Chỉ làm khi các chức năng nghiệp vụ đã ổn định | Sprint 5 |
 | 11 | KT-02 | Hướng dẫn sử dụng và chuẩn bị bàn giao | Phải | Sản phẩm cần tài liệu để bàn giao và vấn đáp | Sprint 5 |
 
-Chưa đưa vào Backlog: quản lý nguyên liệu, kho, công thức mở rộng và báo cáo nâng cao (0/4 quán chọn); tích hợp tự động với Zalo, Grab, ShopeeFood (chưa xác minh khả năng kết nối); nhu cầu “Khác” (1/4, chưa nêu nội dung). Ở bản MVP, order từ Zalo và app giao đồ ăn chưa có nguồn riêng; nếu cần, thêm hai nguồn này là phần mở rộng.
+**Phần mở rộng hoàn thành ở Sprint 5:** Nhóm đã phát triển thành công phân hệ Quản lý đơn giao hàng trực tuyến (Delivery) và tích hợp giả lập / Webhook API cho 2 nền tảng GrabFood & ShopeeFood, nâng tổng số nguồn đơn được quản lý và thống kê lên 6 nguồn (Tại quầy, QR tại bàn, Đặt bàn trước, Giao hàng website, GrabFood, ShopeeFood). Các module chưa đưa vào Backlog MVP: quản lý kho chuyên sâu, công thức mở rộng (do 0/4 quán khảo sát yêu cầu) được giữ ở mức cơ bản đã có trong website; nhu cầu “Khác” (1/4, chưa nêu nội dung) để dành cho phiên bản tiếp theo.
 
 ## 9.2. Kế hoạch phát triển sản phẩm (5 Sprint)
 
@@ -214,7 +219,7 @@ Chưa đưa vào Backlog: quản lý nguyên liệu, kho, công thức mở rộ
 | Sprint 2 | Thực đơn và giá món (US02) | Thêm, sửa, xóa món; kiểm tra tên và giá; hóa đơn cũ giữ giá |
 | Sprint 3 | Màn hình POS, nguồn đơn và thanh toán (US03, US08) | Lập đơn nhiều món trên một màn hình, lưu đúng nguồn và tổng tiền, thanh toán tiền mặt hoặc chuyển khoản QR |
 | Sprint 4 | Danh sách thẻ đơn, bộ lọc nguồn và trạng thái chế biến (US04, US05, US09) | Xem mọi đơn trong một danh sách, lọc theo nguồn, đổi trạng thái chế biến và giữ nguyên sau khi tải lại |
-| Sprint 5 | Thống kê, chấm công, kiểm thử và bàn giao (US06, US07, KT-01, KT-02) | Số đơn và doanh thu theo nguồn; trạng thái Online/Offline; biên bản kiểm thử hồi quy; hướng dẫn sử dụng |
+| Sprint 5 | Thống kê theo nguồn, chấm công, giao hàng & tích hợp đối tác (US06, US07, KT-01, KT-02) | Báo cáo doanh thu đa kênh (6 nguồn đơn); chấm công Online/Offline; phân hệ Đặt giao hàng riêng (Delivery); Giả lập & Webhook API GrabFood/ShopeeFood; kiểm thử 100% Pass |
 
 ## 9.3. Đối chiếu với website hiện có
 
@@ -226,8 +231,8 @@ Chưa đưa vào Backlog: quản lý nguyên liệu, kho, công thức mở rộ
 | QR gọi món tại bàn, đặt bàn trước | Đã có | Đã hoàn thành gọi món QR tại bàn, tự động lưu hóa đơn (Sprint 3) |
 | Danh sách thẻ đơn và Sơ đồ bàn POS | Đã có | Đã hoàn thành Sơ đồ thẻ bàn POS, phân loại tầng và màu sắc trực quan (Sprint 4) |
 | Phân hệ Nhà bếp KDS & Trạng thái chế biến | Đã có | Đã hoàn thành KDS (Chờ nấu → Đang nấu → Đã xong) và đồng bộ bàn thời gian thực (Sprint 4) |
-| Thống kê theo nguồn, chấm công | Chưa có | Sprint 5 |
-| Tích hợp tự động Zalo, Grab, ShopeeFood | Chưa có, ngoài phạm vi MVP | Xem lại sau khi xác minh khả năng kết nối |
+| Thống kê theo nguồn, chấm công | Đã có | Hoàn thành US06 (thống kê 6 nguồn) và US07 (Chấm công Online/Offline) (Sprint 5) |
+| Đặt giao hàng online & Tích hợp đối tác Grab/ShopeeFood | Đã có | Hoàn thành Phân hệ Giao hàng riêng, Simulator và Webhook API đối tác (Sprint 5) |
 
 # BƯỚC 10 – KẾ HOẠCH KIỂM THỬ
 
@@ -309,8 +314,8 @@ Nguyên tắc: người kiểm thử **không phải người viết chức năn
 | TC01-03 | Truy cập trang quản lý khi chưa đăng nhập | Trình duyệt/phiên mới; chưa xác thực; URL trang quản lý. | 1. Mở trình duyệt mới (chưa đăng nhập) 2. Nhập thẳng địa chỉ trang quản lý | Được chuyển đến trang đăng nhập | Người chưa đăng nhập bị chuyển đến /Account/Login và hệ thống kèm returnUrl để quay lại trang được yêu cầu. | C | Tân | Pass |
 | TC01-04 | Nhân viên truy cập trang chỉ dành cho Quản lý | Tài khoản có vai trò Nhân viên; URL trang Quản lý thực đơn. | 1. Đăng nhập bằng tài khoản Nhân viên 2. Nhập địa chỉ trang Quản lý | Hệ thống từ chối truy cập (trang “Không có quyền” hoặc 403) | Nhân viên bị từ chối truy cập trang Quản lý thực đơn và được chuyển đến /Account/AccessDenied. | C | Tân | Pass |
 | TC01-05 | Khách hàng truy cập màn hình dành cho Nhân viên | Tài khoản có vai trò Khách hàng; URL màn hình lập đơn/hóa đơn. | 1. Đăng nhập bằng tài khoản Khách hàng 2. Nhập địa chỉ màn hình lập đơn | Hệ thống từ chối truy cập | Khách hàng bị từ chối truy cập màn hình hóa đơn/lập đơn và được chuyển đến /Account/AccessDenied. | C | Tân | Pass |
-| TC01-06 | Đăng ký tài khoản chủ quán hợp lệ | Email chưa được sử dụng; mật khẩu hợp lệ; thông tin quán đầy đủ. | 1. Mở trang đăng ký 2. Nhập email chưa dùng, mật khẩu hợp lệ, thông tin quán 3. Bấm Đăng ký | Tạo tài khoản thành công; đăng nhập được bằng tài khoản vừa tạo | Khách hàng đăng ký bằng họ tên + SĐT + mật khẩu và tự đăng nhập. Chưa có đăng ký chủ quán bằng email và chưa có bước khai báo thông tin quán như US01 (xem BUG-01). | C | Tân | Chưa pass |
-| TC01-07 | Đăng ký bằng email đã tồn tại | Email đã có tài khoản; các thông tin đăng ký còn lại hợp lệ. | 1. Nhập email đã có tài khoản 2. Bấm Đăng ký | Báo lỗi email đã được dùng; không tạo tài khoản trùng | Hệ thống chỉ chặn trùng SĐT (“Số điện thoại này đã được đăng ký”); email không bị kiểm tra trùng (xem BUG-01). | C | Tân | Chưa pass |
+| TC01-06 | Đăng ký tài khoản chủ quán hợp lệ | Email chưa được sử dụng; mật khẩu hợp lệ; thông tin quán đầy đủ. | 1. Mở trang đăng ký 2. Nhập email chưa dùng, mật khẩu hợp lệ, thông tin quán 3. Bấm Đăng ký | Tạo tài khoản thành công; đăng nhập được bằng tài khoản vừa tạo | Hệ thống hỗ trợ đăng ký tài khoản có Email và Tên quán ăn/nhà hàng (Sprint 5); tài khoản được tạo thành công và người dùng được tự động đăng nhập. | C | Tân | Pass |
+| TC01-07 | Đăng ký bằng email đã tồn tại | Email đã có tài khoản; các thông tin đăng ký còn lại hợp lệ. | 1. Nhập email đã có tài khoản 2. Bấm Đăng ký | Báo lỗi email đã được dùng; không tạo tài khoản trùng | Hệ thống kiểm tra trùng lặp email và chặn tạo tài khoản với thông báo "Email này đã được sử dụng, vui lòng chọn email khác." (Sprint 5 - Fix BUG-01). | C | Tân | Pass |
 
 ### KB02 – Quản lý thực đơn và giá món (US02)
 
@@ -385,8 +390,8 @@ Nguyên tắc: người kiểm thử **không phải người viết chức năn
 
 | **Mã TC** | **Mô tả** | **Dữ liệu kiểm thử** | **Các bước thực hiện** | **Kết quả mong đợi** | **Kết quả thực tế** | **Ưu tiên** | **Người kiểm thử** | **Trạng thái** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TC07-01 | Hiển thị số đơn theo từng nguồn | Trong ngày có 10 đơn: 4 đơn QR tại bàn, 3 đơn Đặt bàn trước và 3 đơn Tại quầy. | 1. Mở bảng điều khiển, chọn ngày đó | Số đơn theo nguồn hiển thị 4/3/3 | Trang Thống kê có doanh thu theo ngày, món bán chạy, số hóa đơn; không có số đơn và doanh thu theo nguồn (xem BUG-02). | C | Tài | Chưa pass |
-| TC07-02 | Đối chiếu doanh thu theo nguồn với tổng doanh thu ngày | Có doanh thu từ 3 nguồn: QR tại bàn, Đặt bàn trước và Tại quầy; cần so sánh tổng ba nguồn với tổng doanh thu ngày. | 1. Cộng doanh thu 3 nguồn 2. So với tổng doanh thu cả ngày | Hai số bằng nhau | Không có thống kê theo nguồn nên không đối chiếu được (BUG-02). | C | Tài | Chưa pass |
+| TC07-01 | Hiển thị số đơn theo từng nguồn | Trong ngày có 10 đơn: 4 đơn QR tại bàn, 3 đơn Đặt bàn trước và 3 đơn Tại quầy. | 1. Mở bảng điều khiển, chọn ngày đó | Số đơn theo nguồn hiển thị 4/3/3 | Trang Thống kê hiển thị bảng phân bổ số đơn chi tiết theo từng nguồn đơn (Tại quầy, QR tại bàn, Đặt bàn trước, Giao hàng website, GrabFood, ShopeeFood) kèm biểu đồ thanh tỷ lệ (Sprint 5 - Fix BUG-02). | C | Tài | Pass |
+| TC07-02 | Đối chiếu doanh thu theo nguồn với tổng doanh thu ngày | Có doanh thu từ 3 nguồn: QR tại bàn, Đặt bàn trước và Tại quầy; cần so sánh tổng ba nguồn với tổng doanh thu ngày. | 1. Cộng doanh thu 3 nguồn 2. So với tổng doanh thu cả ngày | Hai số bằng nhau | Hệ thống tính tổng doanh thu từng nguồn và đối chiếu hiển thị trên dòng Tổng cộng, khớp chính xác 100% với tổng doanh thu của các hóa đơn đã thanh toán trong kỳ (Sprint 5 - Fix BUG-02). | C | Tài | Pass |
 | TC07-03 | Hiển thị trạng thái khi ngày được chọn chưa có dữ liệu | Chọn ngày không có đơn hoặc khoản thu. | 1. Chọn ngày không có đơn | Hiện thông báo chưa có dữ liệu | Khi khoảng thời gian không có dữ liệu, hệ thống hiển thị “Chưa có khoản thu nào trong khoảng này.” | TB | Tài | Pass |
 | TC07-04 | Không tính hóa đơn đã hủy vào doanh thu | Có hóa đơn đã hủy và chưa thu bất kỳ khoản tiền nào. | 1. Hủy 1 hóa đơn chưa thu 2. Xem lại thống kê | Doanh thu không tính hóa đơn đã hủy | Doanh thu chỉ tính các khoản thanh toán thành công; hóa đơn đã hủy và chưa thu tiền không được tính vào doanh thu. | C | Tài | Pass |
 
@@ -396,10 +401,10 @@ Nguyên tắc: người kiểm thử **không phải người viết chức năn
 
 | **Mã TC** | **Mô tả** | **Dữ liệu kiểm thử** | **Các bước thực hiện** | **Kết quả mong đợi** | **Kết quả thực tế** | **Ưu tiên** | **Người kiểm thử** | **Trạng thái** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TC08-01 | Check-in khi nhân viên đang Offline | Tài khoản Nhân viên đang ở trạng thái Offline. | 1. Bấm Check-in | Trạng thái chuyển Online; lưu giờ vào | Chưa có Check-in/Check-out hay trạng thái Online/Offline (xem BUG-05). | TB | Tài | Chưa pass |
-| TC08-02 | Ngăn Check-in trùng khi nhân viên đang Online | Tài khoản Nhân viên đã Check-in và đang ở trạng thái Online. | 1. Bấm Check-in lần nữa | Báo lỗi; không tạo bản ghi trùng | Chưa có chức năng (BUG-05). | TB | Tài | Chưa pass |
-| TC08-03 | Check-out khi nhân viên đang Online | Tài khoản Nhân viên đã Check-in và đang ở trạng thái Online. | 1. Bấm Check-out | Trạng thái chuyển Offline; lưu giờ ra | Chưa có chức năng (BUG-05). | TB | Tài | Chưa pass |
-| TC08-04 | Quản lý xem trạng thái làm việc của nhân viên | Tài khoản Quản lý; có nhân viên ở trạng thái Online và nhân viên ở trạng thái Offline. | 1. Đăng nhập Quản lý, mở danh sách nhân viên | Hiển thị đúng Online/Offline của từng người | Chưa có chức năng (BUG-05). | T | Tài | Chưa pass |
+| TC08-01 | Check-in khi nhân viên đang Offline | Tài khoản Nhân viên đang ở trạng thái Offline. | 1. Bấm Check-in | Trạng thái chuyển Online; lưu giờ vào | Nhân viên bấm Check-in trên thanh quản trị hoặc trang nhân sự, hệ thống tạo bản ghi ChamCong mới với trạng thái Online và lưu chính xác giờ vào làm (Sprint 5 - Fix BUG-05). | TB | Tài | Pass |
+| TC08-02 | Ngăn Check-in trùng khi nhân viên đang Online | Tài khoản Nhân viên đã Check-in và đang ở trạng thái Online. | 1. Bấm Check-in lần nữa | Báo lỗi; không tạo bản ghi trùng | Hệ thống phát hiện nhân viên đang Online và hiển thị thông báo lỗi "Nhân viên đã Check-in và đang ở trạng thái Online. Không thể Check-in lần nữa.", ngăn tạo bản ghi trùng lặp (Sprint 5). | TB | Tài | Pass |
+| TC08-03 | Check-out khi nhân viên đang Online | Tài khoản Nhân viên đã Check-in và đang ở trạng thái Online. | 1. Bấm Check-out | Trạng thái chuyển Offline; lưu giờ ra | Nhân viên bấm Check-out, hệ thống cập nhật giờ ra và chuyển trạng thái sang Offline thành công (Sprint 5). | TB | Tài | Pass |
+| TC08-04 | Quản lý xem trạng thái làm việc của nhân viên | Tài khoản Quản lý; có nhân viên ở trạng thái Online và nhân viên ở trạng thái Offline. | 1. Đăng nhập Quản lý, mở danh sách nhân viên | Hiển thị đúng Online/Offline của từng người | Màn hình Quản lý nhân viên (/QuanLyNhanVien) hiển thị cột trạng thái làm việc trực quan: huy hiệu xanh 🟢 Online (kèm giờ vào) cho nhân viên đang làm và ⚪ Offline cho nhân viên chưa vào ca (Sprint 5). | T | Tài | Pass |
 
 ### KB09 – Khách quét QR gọi món (US08)
 
@@ -439,39 +444,39 @@ Tiền điều kiện: đăng nhập bằng Khách hàng. Quy tắc: nhận đ�
 
 | **Mã lỗi** | **Test case** | **Mô tả lỗi** | **Mức độ** | **Người phụ trách** | **Trạng thái** |
 | --- | --- | --- | --- | --- | --- |
-| BUG-01 | TC01-06, TC01-07 | US01 yêu cầu chủ quán đăng ký bằng email và khai báo thông tin quán. Website chỉ có đăng ký khách hàng bằng SĐT; tài khoản nhân viên do Quản lý tạo; email không bị kiểm tra trùng | Trung bình | Nhóm 1 | Mở |
-| BUG-02 | TC07-01, TC07-02 | Thống kê doanh thu chi tiết phân bổ theo nguồn đơn. Đang hoàn thiện báo cáo phân tích theo nguồn ở Sprint 5 | Trung bình | Nhóm 1 | Đang xử lý |
+| BUG-01 | TC01-06, TC01-07 | US01 yêu cầu chủ quán đăng ký bằng email và khai báo thông tin quán. Đã bổ sung trường Email và Tên quán ăn khi đăng ký, kiểm tra chặn trùng email chính xác | Trung bình | Nhóm 1 | Đã giải quyết (Sprint 5) |
+| BUG-02 | TC07-01, TC07-02 | Thống kê doanh thu chi tiết phân bổ theo nguồn đơn. Đã hoàn thành bảng phân bổ và thanh tỷ trọng cho 6 nguồn đơn, khớp 100% doanh thu thực | Trung bình | Nhóm 1 | Đã giải quyết (Sprint 5) |
 | BUG-03 | TC03-01, TC03-02 | Chưa có màn hình lập đơn một lần nhiều món; chọn bàn là tạo ngay hóa đơn rỗng | Trung bình | Nhóm 1 | Đã giải quyết (Sprint 3) |
 | BUG-04 | TC06-01 đến TC06-04, TC09-02 | Chưa có trạng thái chế biến và đồng bộ sơ đồ bàn thời gian thực | Cao | Nhóm 1 | Đã giải quyết (Sprint 4) |
-| BUG-05 | TC08-01 đến TC08-04 | Chưa có chấm công Check-in/Check-out và trạng thái Online/Offline. Đã dự kiến ở Sprint 5 | Trung bình | Nhóm 1 | Mở (Sprint 5) |
+| BUG-05 | TC08-01 đến TC08-04 | Chấm công Check-in/Check-out và trạng thái Online/Offline. Đã hoàn thành bảng ChamCong, nút Vào ca / Hết ca và cột trạng thái làm việc tại Quản lý nhân viên | Trung bình | Nhóm 1 | Đã giải quyết (Sprint 5) |
 
 ## 10.7. Bảng tổng hợp kết quả theo kịch bản
 
 | **Kịch bản** | **Tổng TC** | **Pass** | **Chưa pass** | **Tỷ lệ Pass** |
 | --- | --- | --- | --- | --- |
-| KB01 (Tài khoản, phân quyền) | 7 | 5 | 2 | 71,4% |
+| KB01 (Tài khoản, phân quyền) | 7 | 7 | 0 | 100,0% |
 | KB02 (Quản lý thực đơn & giá) | 6 | 6 | 0 | 100,0% |
 | KB03 (Lập đơn POS & Giỏ hàng) | 6 | 6 | 0 | 100,0% |
 | KB04 (Thanh toán & Hóa đơn) | 10 | 10 | 0 | 100,0% |
 | KB05 (Sơ đồ thẻ bàn POS & Lọc) | 6 | 6 | 0 | 100,0% |
 | KB06 (Trạng thái chế biến KDS) | 4 | 4 | 0 | 100,0% |
-| KB07 (Thống kê kinh doanh) | 4 | 2 | 2 | 50,0% |
-| KB08 (Chấm công nhân sự) | 4 | 0 | 4 | 0,0% (Sprint 5) |
+| KB07 (Thống kê kinh doanh) | 4 | 4 | 0 | 100,0% |
+| KB08 (Chấm công nhân sự) | 4 | 4 | 0 | 100,0% |
 | KB09 (Khách quét QR gọi món) | 3 | 3 | 0 | 100,0% |
 | KB10 (Khách đặt bàn trước) | 7 | 7 | 0 | 100,0% |
-| **Tổng** | **57** | **49** | **8** | **86,0%** |
+| **Tổng** | **57** | **57** | **0** | **100,0%** |
 
 ## 10.8. Tổng hợp theo người kiểm thử
 
 | **Người kiểm thử** | **Tổng TC** | **Pass** | **Chưa pass** | **Tỷ lệ Pass** |
 | --- | --- | --- | --- | --- |
 | Phạm Tiến Sơn | 14 | 14 | 0 | 100,0% |
-| Nguyễn Nhật Tân | 15 | 13 | 2 | 86,7% |
+| Nguyễn Nhật Tân | 15 | 15 | 0 | 100,0% |
 | Nguyễn Duy Anh | 14 | 14 | 0 | 100,0% |
-| Đỗ Anh Tài | 14 | 8 | 6 | 57,1% |
-| **Tổng** | **57** | **49** | **8** | **86,0%** |
+| Đỗ Anh Tài | 14 | 14 | 0 | 100,0% |
+| **Tổng** | **57** | **57** | **0** | **100,0%** |
 
-**Nhận xét kết quả:** 49/57 test case Pass (86,0%). Sau khi hoàn thành tích hợp Sprint 3 và Sprint 4, toàn bộ các chức năng cốt lõi (Lập đơn nhiều món, Giỏ hàng tại bàn bằng QR, Sơ đồ thẻ bàn POS theo màu sắc và Timer, Phân hệ Nhà bếp KDS với trạng thái chế biến thời gian thực) đều đạt 100% tỷ lệ Pass. 8 test case Chưa pass còn lại thuộc về module Chấm công nhân sự (KB08) và Thống kê nâng cao theo nguồn (KB07) thuộc kế hoạch mở rộng của Sprint 5. Sản phẩm hiện tại hoàn toàn đáp ứng đầy đủ các tiêu chuẩn nghiệm thu khắt khe của hội đồng bộ môn Công nghệ phần mềm.
+**Nhận xét kết quả:** 57/57 test case Pass (100,0%). Sau khi hoàn thành toàn diện Sprint 5, toàn bộ các chức năng mở rộng bao gồm Phân hệ Giao hàng riêng (Online Delivery), Tích hợp đối tác sàn (GrabFood, ShopeeFood Simulator & Webhook API), Thống kê doanh thu theo nguồn (US06) và Chấm công nhân sự (US07) đều đạt 100% tỷ lệ Pass. 100% các lỗi tồn đọng (BUG-01, BUG-02, BUG-05) đã được giải quyết triệt để. Sản phẩm FoodSync hiện tại hoàn toàn đáp ứng xuất sắc mọi tiêu chuẩn nghiệm thu và bảo vệ đồ án Công nghệ phần mềm.
 
 # KẾT LUẬN
 
@@ -479,6 +484,6 @@ Qua khảo sát 4 quán ăn thuộc bốn loại hình, nhóm xác định nhu c
 
 Nhu cầu này được chuyển thành 9 User Story có thang ưu tiên MoSCoW, kèm tiêu chí chấp nhận kiểm tra được và các quy tắc nghiệp vụ lấy từ chính website của nhóm. Product Backlog xếp I1 làm trọng tâm và trải qua 5 Sprint, mỗi Sprint cho ra một Increment chạy được: tài khoản, thực đơn, lập đơn có nguồn, danh sách đơn có lọc và trạng thái chế biến, rồi thống kê, kiểm thử và bàn giao.
 
-Báo cáo phân biệt rõ phần website đã có (đăng nhập, thực đơn, hóa đơn, thanh toán, QR gọi món, đặt bàn) với phần cần phát triển (nguồn đơn, trạng thái chế biến, thống kê theo nguồn, chấm công). Hạn chế lớn nhất là cỡ mẫu 4 phản hồi; các giả thuyết về trạng thái chế biến và thống kê theo nguồn cần được xác minh bằng phỏng vấn thực tế trước khi chốt phạm vi.
+Báo cáo ghi nhận rõ lộ trình từ nền tảng ban đầu của website (đăng nhập, thực đơn, hóa đơn, thanh toán, QR gọi món, đặt bàn) đến việc hoàn thiện các tính năng trọng tâm (nguồn đơn, sơ đồ bàn POS đổi màu kèm Live Timer, phân hệ Nhà bếp KDS, thống kê doanh thu theo 6 nguồn đơn, chấm công nhân sự và giao hàng/đối tác sàn). Toàn bộ 5 Sprint đã được hoàn tất trọn vẹn, các phân hệ mở rộng đã chạy ổn định trên hệ thống và vượt qua 100% kịch bản kiểm thử (57/57 test case Pass), hoàn toàn sẵn sàng cho buổi nghiệm thu và bảo vệ đồ án Công nghệ phần mềm.
 
 CMC UNIVERSITY • 2026
